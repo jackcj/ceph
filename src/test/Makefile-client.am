@@ -176,7 +176,7 @@ bin_DEBUGPROGRAMS += ceph_test_cls_hello
 ceph_test_rados_api_cmd_SOURCES = test/librados/cmd.cc
 ceph_test_rados_api_cmd_LDADD = \
 	$(LIBCOMMON) $(LIBRADOS) $(CRYPTO_LIBS) \
-	$(UNITTEST_LDADD) $(RADOS_TEST_LDADD)
+	$(UNITTEST_LDADD) $(RADOS_TEST_LDADD) $(LIBUUID)
 ceph_test_rados_api_cmd_CXXFLAGS = $(UNITTEST_CXXFLAGS)
 bin_DEBUGPROGRAMS += ceph_test_rados_api_cmd
 
@@ -350,7 +350,7 @@ if LINUX
 ceph_test_librbd_fsx_SOURCES = test/librbd/fsx.cc
 ceph_test_librbd_fsx_LDADD = \
 	$(LIBKRBD) $(LIBRBD) $(LIBRADOS) \
-	$(CRYPTO_LIBS) $(PTHREAD_LIBS)
+	$(CRYPTO_LIBS) $(PTHREAD_LIBS) $(LIBUUID)
 ceph_test_librbd_fsx_CXXFLAGS = $(UNITTEST_CXXFLAGS)
 bin_DEBUGPROGRAMS += ceph_test_librbd_fsx
 endif
@@ -493,7 +493,7 @@ endif # WITH_BUILD_TESTS
 ceph_test_cors_SOURCES = test/test_cors.cc
 ceph_test_cors_LDADD = \
 	$(LIBRADOS) $(LIBRGW) $(CEPH_GLOBAL) \
-	$(UNITTEST_LDADD) \
+	$(UNITTEST_LDADD) $(LIBUUID) \
 	-lcurl -lexpat
 ceph_test_cors_CXXFLAGS = $(UNITTEST_CXXFLAGS)
 bin_DEBUGPROGRAMS += ceph_test_cors
@@ -501,7 +501,7 @@ bin_DEBUGPROGRAMS += ceph_test_cors
 ceph_test_rgw_manifest_SOURCES = test/rgw/test_rgw_manifest.cc
 ceph_test_rgw_manifest_LDADD = \
 	$(LIBRADOS) $(LIBRGW) $(LIBRGW_DEPS) $(CEPH_GLOBAL) \
-	$(UNITTEST_LDADD) $(CRYPTO_LIBS) \
+	$(UNITTEST_LDADD) $(CRYPTO_LIBS) $(LIBUUID) \
 	-lcurl -lexpat
 
 ceph_test_rgw_manifest_CXXFLAGS = $(UNITTEST_CXXFLAGS)
@@ -510,7 +510,7 @@ bin_DEBUGPROGRAMS += ceph_test_rgw_manifest
 ceph_test_cls_rgw_meta_SOURCES = test/test_rgw_admin_meta.cc
 ceph_test_cls_rgw_meta_LDADD = \
 	$(LIBRADOS) $(LIBRGW) $(CEPH_GLOBAL) \
-	$(UNITTEST_LDADD) $(CRYPTO_LIBS) \
+	$(UNITTEST_LDADD) $(CRYPTO_LIBS) $(LIBUUID) \
 	-lcurl -lexpat \
 	libcls_version_client.a libcls_log_client.a \
 	libcls_statelog_client.a libcls_refcount_client.la \
@@ -521,7 +521,7 @@ bin_DEBUGPROGRAMS += ceph_test_cls_rgw_meta
 ceph_test_cls_rgw_log_SOURCES = test/test_rgw_admin_log.cc
 ceph_test_cls_rgw_log_LDADD = \
 	$(LIBRADOS) $(LIBRGW) $(CEPH_GLOBAL) \
-	$(UNITTEST_LDADD) $(CRYPTO_LIBS) \
+	$(UNITTEST_LDADD) $(CRYPTO_LIBS) $(LIBUUID) \
 	-lcurl -lexpat \
 	libcls_version_client.a libcls_log_client.a \
 	libcls_statelog_client.a libcls_refcount_client.la \
@@ -532,7 +532,7 @@ bin_DEBUGPROGRAMS += ceph_test_cls_rgw_log
 ceph_test_cls_rgw_opstate_SOURCES = test/test_rgw_admin_opstate.cc
 ceph_test_cls_rgw_opstate_LDADD = \
 	$(LIBRADOS) $(LIBRGW) $(CEPH_GLOBAL) \
-	$(UNITTEST_LDADD) $(CRYPTO_LIBS) \
+	$(UNITTEST_LDADD) $(CRYPTO_LIBS) $(LIBUUID) \
 	-lcurl -lexpat \
 	libcls_version_client.a libcls_log_client.a \
 	libcls_statelog_client.a libcls_refcount_client.la \
