@@ -1748,7 +1748,6 @@ public:
   MOSDOp *_prepare_osd_op(Op *op);
   void _send_op(Op *op, MOSDOp *m = NULL);
   void _send_op_account(Op *op);
-  void _cancel_linger_op(Op *op);
   void finish_op(OSDSession *session, ceph_tid_t tid);
   void _finish_op(Op *op);
   static bool is_pg_changed(
@@ -1974,6 +1973,7 @@ private:
 public:
   ceph_tid_t op_submit(Op *op, int *ctx_budget = NULL);
   bool is_active() {
+    RWLock::RLocker l(rwlock);
     return !((!inflight_ops.read()) && linger_ops.empty() && poolstat_ops.empty() && statfs_ops.empty());
   }
 
@@ -2014,6 +2014,7 @@ public:
 
   /// cancel an in-progress request with the given return code
 private:
+  int _op_cancel(OSDSession *s, ceph_tid_t tid, int r);
   int op_cancel(OSDSession *s, ceph_tid_t tid, int r);
   int _op_cancel(ceph_tid_t tid, int r);
   friend class C_CancelOp;
