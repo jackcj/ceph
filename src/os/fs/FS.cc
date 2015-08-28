@@ -14,8 +14,13 @@
 
 #include <errno.h>
 #include <sys/types.h>
-#include <sys/vfs.h>
 #include <sys/stat.h>
+#if defined(__linux__)
+#include <sys/vfs.h>
+#elif defined(__APPLE__) || defined(__FreeBSD__)
+#include <sys/param.h>
+#include <sys/mount.h>
+#endif
 #include <fcntl.h>
 
 // from include/linux/falloc.h:
@@ -24,10 +29,11 @@
 #endif
 
 #include "FS.h"
-
+#ifdef HAVE_LIBXFS
 #include "XFS.h"
-
+#endif
 #include "acconfig.h"
+#include "include/compat.h" // lseek64
 
 // ---------------
 
